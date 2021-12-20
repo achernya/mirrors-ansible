@@ -49,9 +49,15 @@
   with_items:
     - git
     - configuration-as-code
+    - job-dsl
   notify: restart jenkins
 - name: Install Jenkins Configuration-as-Code configuration
   copy:
     dest: /var/lib/jenkins/jenkins.yaml
     src: jenkins.yaml
   notify: restart jenkins
+- name: Install build tools
+  apt:
+    name:
+      - git
+      - sudo

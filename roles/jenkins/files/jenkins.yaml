@@ -11,3 +11,33 @@ unclassified:
     defaultSuffix: "@mit.edu"
   pollSCM:
     pollingThreadCount: 10
+jobs:
+  - script: |
+      job('fetch-arch') {
+        scm {
+          git {
+            remote {
+              url('git://mirrors.scripts.mit.edu/mirrors.git')
+            }
+            branch('*/master')
+          }
+        }
+        triggers {
+          cron('H H/2 * * *')
+        }
+        steps {
+          shell('sudo -u mirrors $WORKSPACE/fetch-hudson arch')
+        }
+        properties {
+          buildDiscarder {
+            strategy {
+              logRotator {
+               daysToKeepStr("")
+               numToKeepStr("100")
+               artifactDaysToKeepStr("")
+               artifactNumToKeepStr("")
+              }
+            }
+          }
+        }
+      }

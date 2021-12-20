@@ -19,4 +19,29 @@
     name:
       - openjdk-11-jre
       - jenkins
+- name: Disable Jenkins setup wizard
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: '^JAVA_ARGS='
+    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+  notify: restart jenkins
+- name: Bind Jenkins to localhost
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: '^JENKINS_ARGS='
+    line: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=0.0.0.0"'
+  notify: restart jenkins
+- name: Download jenkins-cli.jar
+  get_url:
+    url: http://127.0.0.1:8080/jnlpJars/jenkins-cli.jar
+    dest: /root/jenkins-cli.jar
+- name: Install plugins
+  shell: "{{ lookup('template', 'install_plugins.sh') }}"
+  args:
+    executable: /bin/bash
+    creates: "/root/installed_{{ item }}"
+  with_items:
+    - git
+    - configuration-as-code
+  notify: restart jenkins
     

@@ -1,0 +1,13 @@
+jenkins:
+  systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
+  numExecutors: 12
+  scmCheckoutRetryCount: 0
+unclassified:
+  location:
+    url: https://mirrors.mit.edu:8443/
+    adminAddress: mirrors-root-mail@mit.edu
+  mailer:
+    smtpHost: outgoing.mit.edu
+    defaultSuffix: "@mit.edu"
+  pollSCM:
+    pollingThreadCount: 10

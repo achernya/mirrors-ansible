@@ -44,4 +44,8 @@
     - git
     - configuration-as-code
   notify: restart jenkins
-    
+- name: Install Jenkins Configuration-as-Code configuration
+  copy:
+    dest: /var/lib/jenkins/jenkins.yaml
+    src: jenkins.yaml
+  notify: restart jenkins

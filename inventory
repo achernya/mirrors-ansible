@@ -116,6 +116,7 @@ all:
       - name: wireshark-web
         comment: Wireshark website (including downloads)
         mountpoint: wireshark
+        fetch: wireshark
       - name: wireshark-dl
         comment: Wireshark download area
         mountpoint: wireshark

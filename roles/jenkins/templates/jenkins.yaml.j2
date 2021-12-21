@@ -13,7 +13,8 @@ unclassified:
     pollingThreadCount: 10
 jobs:
   - script: |
-      job('fetch-arch') {
+{% for mirror in mirrors if mirror.sync|default(True) %}
+      job('{{ mirror.name }}') {
         scm {
           git {
             remote {
@@ -26,7 +27,7 @@ jobs:
           cron('H H/2 * * *')
         }
         steps {
-          shell('sudo -u mirrors $WORKSPACE/fetch-hudson arch')
+          shell('sudo -u mirrors $WORKSPACE/fetch-hudson {{ mirror.fetch|default(mirror.name) }}')
         }
         properties {
           buildDiscarder {
@@ -41,3 +42,4 @@ jobs:
           }
         }
       }
+{% endfor %}

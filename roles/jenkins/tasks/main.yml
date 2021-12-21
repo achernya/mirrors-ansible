@@ -58,9 +58,9 @@
     - job-dsl
   notify: restart jenkins
 - name: Install Jenkins Configuration-as-Code configuration
-  copy:
+  template:
+    src: jenkins.yaml.j2
     dest: /var/lib/jenkins/jenkins.yaml
-    src: jenkins.yaml
   notify: restart jenkins
 - name: Install build tools
   apt:

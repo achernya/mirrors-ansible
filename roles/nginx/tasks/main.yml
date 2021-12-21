@@ -51,7 +51,17 @@
 - name: Install sites
   copy:
     src: "{{ item }}"
-    dest: /etc/nginx/sites-enabled
+    dest: /etc/nginx/sites-available
+  with_items:
+    - jenkins_site
+    - mirrors_site
+  notify: restart nginx
+- name: Activate sites
+  file:
+    src: "/etc/nginx/sites-available/{{ item }}"
+    dest: "/etc/nginx/sites-enabled/{{ item }}"
+    state: link
+    force: yes
   with_items:
     - jenkins_site
     - mirrors_site

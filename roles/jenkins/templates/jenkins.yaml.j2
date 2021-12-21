@@ -2,6 +2,9 @@ jenkins:
   systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
   numExecutors: 12
   scmCheckoutRetryCount: 0
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: true
 unclassified:
   location:
     url: https://mirrors.mit.edu:8443/

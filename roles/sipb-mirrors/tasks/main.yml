@@ -1,0 +1,13 @@
+- name: Create mirrors user
+  user:
+    name: mirrors
+    comment: SIPB Mirrors
+    uid: 1000
+- name: Ensure jenkins can act as mirrors
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^jenkins'
+    line: 'jenkins ALL=(mirrors) NOPASSWD: ALL'
+    validate: visudo -cf %s
+

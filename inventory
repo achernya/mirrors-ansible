@@ -24,12 +24,18 @@ all:
       - name: CTAN
         comment: CTAN
         fetch: ctan
+      - name: cyanogenmod
+        comment: CyanogenMod
+        disabled: True
       - name: cygwin
         comment: Cygwin
       - name: debian
         comment: Debian packages
       - name: debian-backports
         comment: Debian Backports
+      - name: debian-cd
+        comment: Debian CD images
+        disabled: True
       - name: fedora
         comment: Fedora
       - name: fedora-epel
@@ -45,6 +51,9 @@ all:
         comment: Gentoo Linux source mirror
       - name: gentoo-portage
         comment: Gentoo Linux Portage tree mirror
+      - name: gnewsense
+        comment: gNewSense
+        disabled: True
       - name: gutenberg
         comment: Gutenberg Project (out-of-sync)
       - name: kde

@@ -17,6 +17,7 @@ all:
         comment: CentOS
       - name: bulk.resource.org
         comment: bulk.resource.org
+        disabled: True
       - name: CPAN
         comment: CPAN
         fetch: cpan

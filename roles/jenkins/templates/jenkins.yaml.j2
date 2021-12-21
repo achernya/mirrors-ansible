@@ -36,6 +36,9 @@ jobs:
             branch('*/master')
           }
         }
+{% if mirror.disabled|default(False) %}
+        disabled()
+{% endif %}
         triggers {
           cron('H H/2 * * *')
         }

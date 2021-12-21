@@ -101,6 +101,7 @@ all:
         sync: false
       - name: ubuntu
         comment: Ubuntu Archives
+        fetch: ubuntu-archive
       - name: ubuntu-cdimage
         comment: Ubuntu CD Images
       - name: ubuntu-ports

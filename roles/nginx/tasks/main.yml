@@ -1,0 +1,63 @@
+- name: Install nginx
+  apt:
+    name:
+      - nginx
+      - python3-cryptography
+- name: Ensure TLS directories exist
+  file:
+    path: "/etc/ssl/{{ item }}"
+    state: directory
+  with_items:
+    - private
+    - certs
+    - csr
+- name: Generate TLS keypair
+  openssl_privatekey:
+    path: /etc/ssl/private/mirrors.key
+    type: ECC
+    curve: secp256r1
+- name: Generate certificate request
+  openssl_csr:
+    path: /etc/ssl/csr/mirrors.csr
+    privatekey_path: /etc/ssl/private/mirrors.key
+    common_name: mirrors.mit.edu
+- name: Generate self-signed certificate
+  openssl_certificate:
+    path: /etc/ssl/certs/mirrors.cer
+    privatekey_path: /etc/ssl/private/mirrors.key
+    csr_path: /etc/ssl/csr/mirrors.csr
+    provider: selfsigned
+  notify: restart nginx
+- name: Disable old ciphers
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^\s*ssl_protocols '
+    line: '	ssl_protocols TLSv1.2 TLSv1.3;'
+  notify: restart nginx
+- name: Install TLS parameters
+  copy:
+    dest: /etc/nginx/conf.d/00-tls-done-right.conf
+    src: 00-tls-done-right.conf
+  notify: restart nginx
+- name: Install nginx snippets
+  copy:
+    src: "{{ item }}"
+    dest: /etc/nginx/snippets
+  with_items:
+    - security_headers.conf
+    - mirrors_common.conf
+    - jenkins_common.conf
+  notify: restart nginx
+- name: Install sites
+  copy:
+    src: "{{ item }}"
+    dest: /etc/nginx/sites-enabled
+  with_items:
+    - jenkins_site
+    - mirrors_site
+  notify: restart nginx
+- name: Delete default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx

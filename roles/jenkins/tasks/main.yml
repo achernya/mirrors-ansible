@@ -30,16 +30,22 @@
     regexp: '^JAVA_ARGS='
     line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
   notify: restart jenkins
+- name: Move jenkins to port 8088
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: '^HTTP_PORT='
+    line: 'HTTP_PORT=8088'
+  notify: restart jenkins
 - name: Bind Jenkins to localhost
   lineinfile:
     path: /etc/default/jenkins
     regexp: '^JENKINS_ARGS='
-    line: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=0.0.0.0"'
+    line: 'JENKINS_ARGS="--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT --httpListenAddress=127.0.0.1"'
   notify: restart jenkins
 - meta: flush_handlers
 - name: Download jenkins-cli.jar
   get_url:
-    url: http://127.0.0.1:8080/jnlpJars/jenkins-cli.jar
+    url: http://127.0.0.1:8088/jnlpJars/jenkins-cli.jar
     dest: /root/jenkins-cli.jar
 - name: Install plugins
   shell: "{{ lookup('template', 'install_plugins.sh') }}"

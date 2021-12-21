@@ -3,7 +3,7 @@
   listen: "restart jenkins"
 - name: Wait for Jenkins to come up
   uri:
-    url: http://localhost:8080/login
+    url: http://localhost:8088/login
     method: GET
     status_code: 200
     return_content: no

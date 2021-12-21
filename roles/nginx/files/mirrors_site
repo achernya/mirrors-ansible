@@ -1,0 +1,40 @@
+## mirrors.mit.edu configuration
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	listen 443 ssl http2 default_server;
+	listen [::]:443 ssl http2 default_server;
+
+	ssl_certificate /etc/ssl/certs/mirrors.cer;
+	ssl_certificate_key /etc/ssl/private/mirrors.key;
+
+	server_name mirrors.mit.edu ubuntu.mit.edu;
+
+	include /etc/nginx/snippets/mirrors_common.conf;
+}
+
+server {
+	listen 80;
+	listen [::]:80;
+
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+
+	ssl_certificate /etc/ssl/certs/mirrors.cer;
+	ssl_certificate_key /etc/ssl/private/mirrors.key;
+
+	server_name solar-one.mit.edu solar-two.mit.edu solar-three.mit.edu;
+
+	include /etc/nginx/snippets/mirrors_common.conf;
+}
+
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	server_name mirrors mirror.mit.edu mirror ubuntu.media.mit.edu ubuntu 18.7.29.125 18.7.29.12 "";
+
+	include /etc/nginx/snippets/mirrors_common.conf;
+}

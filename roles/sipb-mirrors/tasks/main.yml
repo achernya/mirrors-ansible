@@ -52,6 +52,12 @@
     state: link
     force: yes
   with_items: "{{ mirrors }}"
+- name: Add pub link farm into backing directory
+  file:
+    src: "{{ mirrordir }}/pub"
+    dest: "/srv/ifs-mirror/pub"
+    state: link
+    force: yes
 - name: Mount /ifs/mirror
   mount:
     path: /ifs/mirror

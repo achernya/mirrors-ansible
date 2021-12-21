@@ -10,4 +10,58 @@
     regexp: '^jenkins'
     line: 'jenkins ALL=(mirrors) NOPASSWD: ALL'
     validate: visudo -cf %s
-
+- name: Create backing directory for /ifs/mirror
+  file:
+    path: /srv/ifs-mirror
+    state: directory
+    mode: '0755'
+- name: Create backing directory for /ifs/mirror/.locks
+  file:
+    path: /srv/mirror-locks
+    state: directory
+    mode: '0755'
+    owner: mirrors
+    group: mirrors
+- name: Clone mirrors www
+  git:
+    repo: 'https://github.com/sipb/mirrors-www.git'
+    dest: /srv/www
+    force: yes
+- name: Link static files into backing directory
+  file:
+    src: "{{ item.src }}"
+    dest: /srv/ifs-mirror/{{ item.dst }}
+    state: link
+  with_items:
+    - src: /srv/www
+      dst: www
+    - src: www/index.html
+      dst: index.html
+    - src: www/media
+      dst: media
+    - src: www/robots.txt
+      dst: robots.txt
+    - src: www/teapot.html
+      dst: teapot.html
+    - src: /srv/mirror-locks
+      dst: .locks
+- name: Link storage volumes into backing directory
+  file:
+    src: "{{ mirrordir }}/{{ item.mountpoint|default(item.name) }}"
+    dest: "/srv/ifs-mirror/{{ item.mountpoint|default(item.name) }}"
+    state: link
+    force: yes
+  with_items: "{{ mirrors }}"
+- name: "Ensure /ifs/mirror exists"
+  file:
+    path: /ifs/mirror
+    state: directory
+    mode: '0755'
+    recurse: yes
+- name: Mount /ifs/mirror
+  mount:
+    path: /ifs/mirror
+    src: /srv/ifs-mirror
+    state: mounted
+    opts: bind,ro
+    fstype: none

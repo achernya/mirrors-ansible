@@ -23,8 +23,6 @@ all:
       - name: CTAN
         comment: CTAN
         fetch: ctan
-      - name: cyanogenmod
-        comment: Cyanogenmod
       - name: cygwin
         comment: Cygwin
       - name: debian
@@ -46,8 +44,6 @@ all:
         comment: Gentoo Linux source mirror
       - name: gentoo-portage
         comment: Gentoo Linux Portage tree mirror
-      - name: gnewsense
-        comment: gNewSense
       - name: gutenberg
         comment: Gutenberg Project (out-of-sync)
       - name: kde
@@ -77,8 +73,6 @@ all:
         comment: Kodi (formerly XBMC)
       - name: libreboot
         comment: Libreboot
-      - name: macports
-        comment: MacPorts
       - name: netbsd
         comment: NetBSD
         mountpoint: NetBSD

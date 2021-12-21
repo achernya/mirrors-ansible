@@ -12,14 +12,19 @@ all:
     mirrors:
       - name: archlinux
         comment: Arch Linux
+        fetch: arch
       - name: centos
         comment: CentOS
       - name: bulk.resource.org
         comment: bulk.resource.org
       - name: CPAN
         comment: CPAN
+        fetch: cpan
       - name: CTAN
         comment: CTAN
+        fetch: ctan
+      - name: cyanogenmod
+        comment: Cyanogenmod
       - name: cygwin
         comment: Cygwin
       - name: debian
@@ -41,6 +46,8 @@ all:
         comment: Gentoo Linux source mirror
       - name: gentoo-portage
         comment: Gentoo Linux Portage tree mirror
+      - name: gnewsense
+        comment: gNewSense
       - name: gutenberg
         comment: Gutenberg Project (out-of-sync)
       - name: kde
@@ -70,6 +77,11 @@ all:
         comment: Kodi (formerly XBMC)
       - name: libreboot
         comment: Libreboot
+      - name: macports
+        comment: MacPorts
+      - name: netbsd
+        comment: NetBSD
+        mountpoint: NetBSD
       - name: openbsd
         comment: OpenBSD
       - name: osmc
@@ -87,6 +99,7 @@ all:
       - name: torproject-web
         comment: Tor Project website (including dist)
         mountpoint: torproject
+        fetch: torproject
       - name: torproject-dist
         comment: Tor Project software distribution
         mountpoint: torproject

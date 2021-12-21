@@ -23,18 +23,18 @@
     name:
       - jenkins
   notify: restart jenkins
+- name: Move jenkins to port 8088
+  lineinfile:
+    path: /etc/default/jenkins
+    regexp: '^HTTP_PORT='
+    line: 'HTTP_PORT=8088'
+  notify: restart jenkins
 - meta: flush_handlers
 - name: Disable Jenkins setup wizard
   lineinfile:
     path: /etc/default/jenkins
     regexp: '^JAVA_ARGS='
     line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
-  notify: restart jenkins
-- name: Move jenkins to port 8088
-  lineinfile:
-    path: /etc/default/jenkins
-    regexp: '^HTTP_PORT='
-    line: 'HTTP_PORT=8088'
   notify: restart jenkins
 - name: Bind Jenkins to localhost
   lineinfile:

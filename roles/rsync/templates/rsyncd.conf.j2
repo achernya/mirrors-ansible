@@ -1,0 +1,14 @@
+motd file = /etc/rsyncd.motd
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+lock file = /var/run/rsync.lock
+timeout = 300
+uid = nobody
+gid = nogroup
+refuse options = c
+
+{% for mirror in mirrors %}
+[{{ mirror.name }}]
+        path = /ifs/mirror/{{ mirror.mountpoint|default(mirror.name) }}/{{ mirror.rsyncd_suffix|default("") }}
+        comment = {{ mirror.comment }}
+{% endfor %}

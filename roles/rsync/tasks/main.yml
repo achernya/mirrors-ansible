@@ -1,0 +1,14 @@
+- name: Install rsync
+  apt:
+    name:
+      - rsync
+- name: Install rsyncd.motd
+  copy:
+    dest: /etc/rsyncd.motd
+    src: rsyncd.motd
+- name: Generate rsyncd.conf
+  template:
+    src: rsyncd.conf.j2
+    dest: /etc/rsyncd.conf
+  notify: restart rsyncd
+

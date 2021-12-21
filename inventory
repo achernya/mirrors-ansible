@@ -1,2 +1,110 @@
-[mirrors_dev]
-192.168.1.214	ansible_connection=ssh	ansible_user=root
+
+all:
+  hosts:
+    192.168.1.214:
+      ansible_connection: ssh
+      ansible_user: root
+  children:
+    mirrors_dev:
+      hosts:
+        192.168.1.214:
+  vars:
+    mirrors:
+      - name: archlinux
+        comment: Arch Linux
+      - name: centos
+        comment: CentOS
+      - name: bulk.resource.org
+        comment: bulk.resource.org
+      - name: CPAN
+        comment: CPAN
+      - name: CTAN
+        comment: CTAN
+      - name: cygwin
+        comment: Cygwin
+      - name: debian
+        comment: Debian packages
+      - name: debian-backports
+        comment: Debian Backports
+      - name: fedora
+        comment: Fedora
+      - name: fedora-epel
+        comment: Fedora EPEL
+        mountpoint: epel
+      - name: finnix
+        comment: Finnix releases
+        rsyncd_suffix: releases/
+      - name: freebsd
+        comment: FreeBSD
+        mountpoint: FreeBSD
+      - name: gentoo-distfiles
+        comment: Gentoo Linux source mirror
+      - name: gentoo-portage
+        comment: Gentoo Linux Portage tree mirror
+      - name: gutenberg
+        comment: Gutenberg Project (out-of-sync)
+      - name: kde
+        comment: KDE
+      - name: kdeftp
+        comment: KDE FTP area
+        mountpoint: kde
+        sync: false
+      - name: kdestableftp
+        comment: Stable KDE FTP area
+        mountpoint: kde
+        rsyncd_suffix: stable/
+        sync: false
+      - name: kdestablelatestftp
+        comment: Stable KDE release area
+        mountpoint: kde
+        rsyncd_suffix: stable/latest/
+        sync: false
+      - name: kdeunstableftp
+        comment: Unstable KDE FTP area
+        mountpoint: kde
+        rsyncd_suffix: unstable/
+        sync: false
+      - name: kernel
+        comment: kernel.org
+      - name: kodi
+        comment: Kodi (formerly XBMC)
+      - name: libreboot
+        comment: Libreboot
+      - name: openbsd
+        comment: OpenBSD
+      - name: osmc
+        comment: OSMC
+      - name: parrot
+        comment: Parrot Security OS
+      - name: raspbian
+        comment: raspbian
+      - name: sage
+        comment: Sage
+      - name: sugarlabs
+        comment: sugarlabs
+      - name: tails
+        comment: Tails archive (tails directory)
+      - name: torproject-web
+        comment: Tor Project website (including dist)
+        mountpoint: torproject
+      - name: torproject-dist
+        comment: Tor Project software distribution
+        mountpoint: torproject
+        rsyncd_suffix: dist/
+        sync: false
+      - name: ubuntu
+        comment: Ubuntu Archives
+      - name: ubuntu-cdimage
+        comment: Ubuntu CD Images
+      - name: ubuntu-ports
+        comment: Ubuntu Ports
+      - name: ubuntu-releases
+        comment: Ubuntu CD Releases (22 GB)
+      - name: wireshark-web
+        comment: Wireshark website (including downloads)
+        mountpoint: wireshark
+      - name: wireshark-dl
+        comment: Wireshark download area
+        mountpoint: wireshark
+        rsyncd_suffix: download/
+        sync: false

@@ -52,12 +52,6 @@
     state: link
     force: yes
   with_items: "{{ mirrors }}"
-- name: "Ensure /ifs/mirror exists"
-  file:
-    path: /ifs/mirror
-    state: directory
-    mode: '0755'
-    recurse: yes
 - name: Mount /ifs/mirror
   mount:
     path: /ifs/mirror

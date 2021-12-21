@@ -10,6 +10,11 @@ jenkins:
         - "USER:Job/Read:Anonymous"
         - "GROUP:Overall/Read:authenticated"
         - "GROUP:Job/Read:authenticated"
+security:
+  queueItemAuthenticator:
+    authenticators:
+      - global:
+          strategy: "systemAuthorizationStrategy"
 unclassified:
   location:
     url: https://mirrors.mit.edu:8443/

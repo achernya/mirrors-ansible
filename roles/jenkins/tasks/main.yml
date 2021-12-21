@@ -57,6 +57,7 @@
     - configuration-as-code
     - job-dsl
     - matrix-auth
+    - authorize-project
   notify: restart jenkins
 - name: Install Jenkins Configuration-as-Code configuration
   template:

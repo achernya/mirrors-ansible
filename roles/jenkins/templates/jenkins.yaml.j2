@@ -3,8 +3,13 @@ jenkins:
   numExecutors: 12
   scmCheckoutRetryCount: 0
   authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: true
+    globalMatrix:
+      permissions:
+        - "USER:Overall/Administer:admin"
+        - "USER:Overall/Read:Anonymous"
+        - "USER:Job/Read:Anonymous"
+        - "GROUP:Overall/Read:authenticated"
+        - "GROUP:Job/Read:authenticated"
 unclassified:
   location:
     url: https://mirrors.mit.edu:8443/

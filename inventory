@@ -13,29 +13,37 @@ all:
       - name: archlinux
         comment: Arch Linux
         fetch: arch
+        schedule: "H H/2 * * *"
       - name: centos
         comment: CentOS
       - name: bulk.resource.org
         comment: bulk.resource.org
         disabled: True
+        schedule: "H H/6 * * *"
       - name: CPAN
         comment: CPAN
         fetch: cpan
+        schedule: "H H * * *"
       - name: CTAN
         comment: CTAN
         fetch: ctan
+        schedule: "H H * * *"
       - name: cyanogenmod
         comment: CyanogenMod
         disabled: True
       - name: cygwin
         comment: Cygwin
+        schedule: "H H/12 * * *"
       - name: debian
         comment: Debian packages
+        schedule: "H H/6 * * *"
       - name: debian-backports
         comment: Debian Backports
+        schedule: "H H/12 * * *"
       - name: debian-cd
         comment: Debian CD images
         disabled: True
+        schedule: "H H/12 * * *"
       - name: fedora
         comment: Fedora
       - name: fedora-epel
@@ -44,13 +52,16 @@ all:
       - name: finnix
         comment: Finnix releases
         rsyncd_suffix: releases/
+        schedule: "H H/12 * * *"
       - name: freebsd
         comment: FreeBSD
         mountpoint: FreeBSD
+        scheduke: "H H/12 * * *"
       - name: gentoo-distfiles
         comment: Gentoo Linux source mirror
       - name: gentoo-portage
         comment: Gentoo Linux Portage tree mirror
+        schedule: "H * * * *"
       - name: gnewsense
         comment: gNewSense
         disabled: True
@@ -58,6 +69,7 @@ all:
         comment: Gutenberg Project (out-of-sync)
       - name: kde
         comment: KDE
+        schedule: "H H * * *"
       - name: kdeftp
         comment: KDE FTP area
         mountpoint: kde
@@ -79,6 +91,7 @@ all:
         sync: false
       - name: kernel
         comment: kernel.org
+        schedule: "H H/6 * * *"
       - name: kodi
         comment: Kodi (formerly XBMC)
       - name: libreboot
@@ -86,21 +99,25 @@ all:
       - name: netbsd
         comment: NetBSD
         mountpoint: NetBSD
+        schedule: "H H/12 * * *"
       - name: openbsd
         comment: OpenBSD
         mountpoint: OpenBSD
+        schedule: "H H/8 * * *"
       - name: osmc
         comment: OSMC
       - name: parrot
         comment: Parrot Security OS
       - name: raspbian
         comment: raspbian
+        schedule: "H H/6 * * *"
       - name: sage
         comment: Sage
       - name: sugarlabs
         comment: sugarlabs
       - name: tails
         comment: Tails archive (tails directory)
+        schedule: "H H/2 * * *"
       - name: torproject-web
         comment: Tor Project website (including dist)
         mountpoint: torproject
@@ -113,12 +130,16 @@ all:
       - name: ubuntu
         comment: Ubuntu Archives
         fetch: ubuntu-archive
+        schedule: "H H/6 * * *"
       - name: ubuntu-cdimage
         comment: Ubuntu CD Images
+        schedule: "H H/12 * * *"
       - name: ubuntu-ports
         comment: Ubuntu Ports
+        schedule: "H H/6 * * *"
       - name: ubuntu-releases
-        comment: Ubuntu CD Releases (22 GB)
+        comment: Ubuntu CD Releases
+        schedule: "H H * * *"
       - name: wireshark-web
         comment: Wireshark website (including downloads)
         mountpoint: wireshark

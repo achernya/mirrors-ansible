@@ -40,7 +40,7 @@ jobs:
         disabled()
 {% endif %}
         triggers {
-          cron('H H/2 * * *')
+          cron('{{ mirror.schedule|default("H H/4 * * *") }}')
         }
         steps {
           shell('sudo -u mirrors $WORKSPACE/fetch-hudson {{ mirror.fetch|default(mirror.name) }}')

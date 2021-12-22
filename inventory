@@ -112,6 +112,7 @@ all:
       - name: raspbian
         comment: raspbian
         schedule: "H H/6 * * *"
+        disabled: True
       - name: sage
         comment: Sage
       - name: sugarlabs

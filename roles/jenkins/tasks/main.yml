@@ -30,11 +30,11 @@
     line: 'HTTP_PORT=8088'
   notify: restart jenkins
 - meta: flush_handlers
-- name: Disable Jenkins setup wizard
+- name: Disable Jenkins setup wizard and set max heap
   lineinfile:
     path: /etc/default/jenkins
     regexp: '^JAVA_ARGS='
-    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+    line: 'JAVA_ARGS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Xmx1G"'
   notify: restart jenkins
 - name: Bind Jenkins to localhost
   lineinfile:

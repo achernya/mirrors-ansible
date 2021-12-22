@@ -67,6 +67,7 @@ all:
         disabled: True
       - name: gutenberg
         comment: Gutenberg Project (out-of-sync)
+        disabled: True
       - name: kde
         comment: KDE
         schedule: "H H * * *"

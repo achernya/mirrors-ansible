@@ -22,7 +22,7 @@ server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
 
-	ssl_certificate /etc/ssl/certs/mirrors.cer;
+	ssl_certificate /etc/ssl/certs/hosts.cer;
 	ssl_certificate_key /etc/ssl/private/mirrors.key;
 
 	server_name solar-one.mit.edu solar-two.mit.edu solar-three.mit.edu;

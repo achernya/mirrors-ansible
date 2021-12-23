@@ -16,16 +16,39 @@
     path: /etc/ssl/private/mirrors.key
     type: ECC
     curve: secp256r1
-- name: Generate certificate request
+- name: Generate certificate request (mirrors hostnames)
   openssl_csr:
     path: /etc/ssl/csr/mirrors.csr
     privatekey_path: /etc/ssl/private/mirrors.key
     common_name: mirrors.mit.edu
-- name: Generate self-signed certificate
+    subject_alt_name: "{{ item.value | map('regex_replace', '^', 'DNS:') | list }}"
+  with_dict:
+    dns_server:
+    - mirrors.mit.edu
+    - ubuntu.mit.edu
+- name: Generate certificate request (hosts hostnames)
+  openssl_csr:
+    path: /etc/ssl/csr/hosts.csr
+    privatekey_path: /etc/ssl/private/mirrors.key
+    common_name: solar-one.mit.edu
+    subject_alt_name: "{{ item.value | map('regex_replace', '^', 'DNS:') | list }}"
+  with_dict:
+    dns_server:
+    - solar-one.mit.edu
+    - solar-two.mit.edu
+    - solar-three.mit.edu
+- name: Generate self-signed certificate (mirrors hostnames)
   openssl_certificate:
     path: /etc/ssl/certs/mirrors.cer
     privatekey_path: /etc/ssl/private/mirrors.key
     csr_path: /etc/ssl/csr/mirrors.csr
+    provider: selfsigned
+  notify: restart nginx
+- name: Generate self-signed certificate (hosts hostnames)
+  openssl_certificate:
+    path: /etc/ssl/certs/hosts.cer
+    privatekey_path: /etc/ssl/private/mirrors.key
+    csr_path: /etc/ssl/csr/hosts.csr
     provider: selfsigned
   notify: restart nginx
 - name: Disable old ciphers

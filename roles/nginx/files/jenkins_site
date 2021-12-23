@@ -6,17 +6,18 @@ upstream jenkins {
 server {
 	listen 8443 ssl http2;
 	listen [::]:8443 ssl http2;
-	ssl_certificate /etc/ssl/certs/hosts.cer;
+	ssl_certificate /etc/ssl/certs/mirrors.cer;
 	ssl_certificate_key /etc/ssl/private/mirrors.key;
 
-	server_name solar-one.mit.edu solar-two.mit.edu solar-three.mit.edu;
+	server_name mirrors.mit.edu ubuntu.mit.edu;
 	
 	include /etc/nginx/snippets/jenkins_common.conf;
 }
 
 server {
-	listen 18.7.29.12:8443 ssl http2;
-	ssl_certificate /etc/ssl/certs/mirrors.cer;
+	listen 8443 ssl http2;
+	listen [::]:8443 ssl http2;
+	ssl_certificate /etc/ssl/certs/hosts.cer;
 	ssl_certificate_key /etc/ssl/private/mirrors.key;
 
 	server_name solar-one.mit.edu solar-two.mit.edu solar-three.mit.edu;

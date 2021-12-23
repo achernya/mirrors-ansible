@@ -4,6 +4,7 @@ all:
       ansible_connection: ssh
       ansible_user: root
       mirrordir: /srv/volumes
+      devserver: True
   children:
     mirrors_dev:
       hosts:

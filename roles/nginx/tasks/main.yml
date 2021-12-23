@@ -16,6 +16,7 @@
     path: /etc/ssl/private/mirrors.key
     type: ECC
     curve: secp256r1
+  when: devserver|default(False)
 - name: Generate certificate request (mirrors hostnames)
   openssl_csr:
     path: /etc/ssl/csr/mirrors.csr
@@ -44,6 +45,7 @@
     csr_path: /etc/ssl/csr/mirrors.csr
     provider: selfsigned
   notify: restart nginx
+  when: devserver|default(False)
 - name: Generate self-signed certificate (hosts hostnames)
   openssl_certificate:
     path: /etc/ssl/certs/hosts.cer
@@ -51,6 +53,7 @@
     csr_path: /etc/ssl/csr/hosts.csr
     provider: selfsigned
   notify: restart nginx
+  when: devserver|default(False)
 - name: Disable old ciphers
   lineinfile:
     path: /etc/nginx/nginx.conf

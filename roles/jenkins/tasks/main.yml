@@ -69,3 +69,4 @@
     name:
       - git
       - sudo
+      - zsh

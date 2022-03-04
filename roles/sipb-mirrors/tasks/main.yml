@@ -46,6 +46,7 @@
     - src: /srv/mirror-locks
       dst: .locks
 - name: Link storage volumes into backing directory
+  when: not (item.no_mount|default(False))
   file:
     src: "{{ mirrordir }}/{{ item.mountpoint|default(item.name) }}"
     dest: "/srv/ifs-mirror/{{ item.mountpoint|default(item.name) }}"

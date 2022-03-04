@@ -22,7 +22,7 @@
     mode: '0755'
     owner: mirrors
     group: mirrors
-- name: Create backing directory for /ifs/mirror/.fedora-buffet
+- name: Create backing directory for /ifs/mirror/fedora-buffet
   file:
     path: /srv/fedora-buffet
     state: directory
@@ -51,7 +51,7 @@
     - src: /srv/mirror-locks
       dst: .locks
     - src: /srv/fedora-buffet
-      dst: .fedora-buffet
+      dst: fedora-buffet
 - name: Link storage volumes into backing directory
   when: not (item.no_mount|default(False))
   file:

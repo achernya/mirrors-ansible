@@ -45,11 +45,20 @@ all:
         comment: Debian CD images
         disabled: True
         schedule: "H H/12 * * *"
+      - name: fedora-buffet
+        comment: Fedora Buffet
+        no_mount: True
       - name: fedora
         comment: Fedora
+        fedora_buffet: True
+        sync: False
+        disabled: True
       - name: fedora-epel
         comment: Fedora EPEL
         mountpoint: epel
+        fedora_buffet: True
+        sync: False
+        disabled: True
       - name: finnix
         comment: Finnix releases
         rsyncd_suffix: releases/

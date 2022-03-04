@@ -22,6 +22,11 @@
     mode: '0755'
     owner: mirrors
     group: mirrors
+- name: Create backing directory for /ifs/mirror/.fedora-buffet
+  file:
+    path: /srv/fedora-buffet
+    state: directory
+    mode: '0755'
 - name: Clone mirrors www
   git:
     repo: 'https://github.com/sipb/mirrors-www.git'
@@ -45,6 +50,8 @@
       dst: teapot.html
     - src: /srv/mirror-locks
       dst: .locks
+    - src: /srv/fedora-buffet
+      dst: .fedora-buffet
 - name: Link storage volumes into backing directory
   when: not (item.no_mount|default(False))
   file:
@@ -59,6 +66,14 @@
     dest: "/srv/ifs-mirror/pub"
     state: link
     force: yes
+- name: Create bind-mount farm for syncing fedora-buffet using quick-fedora-mirror
+  mount:
+    path: "/srv/fedora-buffet/{{ item.mountpoint|default(item.name) }}"
+    src: "{{ mirrordir }}/{{ item.mountpoint|default(item.name) }}"
+    state: "{{ item.fedora_buffet|default(False) and 'mounted' or 'absent' }}"
+    opts: bind
+    fstype: none
+  with_items: "{{ mirrors }}"
 - name: Mount /ifs/mirror
   mount:
     path: /ifs/mirror

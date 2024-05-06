@@ -71,7 +71,7 @@
     path: "/srv/fedora-buffet/{{ item.mountpoint|default(item.name) }}"
     src: "{{ mirrordir }}/{{ item.mountpoint|default(item.name) }}"
     state: "{{ item.fedora_buffet|default(False) and 'mounted' or 'absent' }}"
-    opts: bind
+    opts: bind,x-systemd.requires=zfs-mount.service
     fstype: none
   with_items: "{{ mirrors }}"
 - name: Mount /ifs/mirror

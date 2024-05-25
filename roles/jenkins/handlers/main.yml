@@ -12,3 +12,6 @@
   retries: 60
   delay: 1
   listen: "restart jenkins"
+- name: update apt
+  ansible.builtin.apt:
+    update_cache: yes

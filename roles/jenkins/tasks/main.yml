@@ -1,21 +1,34 @@
 - name: Install openjdk
   apt:
     name:
-      - openjdk-11-jre
+      - openjdk-17-jre
 - name: Install gpg for apt key manipulation
   apt:
     name:
       - gpg
-- name: Ensure Jenkins apt key is configured
-  apt_key:
-    id: 62A9756BFD780C377CF24BA8FCEF32E745F2C3D5
-    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
-    state: present
-- name: Ensure Jenkins apt repository is configured
-  apt_repository:
-    repo: deb https://pkg.jenkins.io/debian-stable binary/
-    state: present
-    filename: jenkins
+- name: Add Jenkins key and repository
+  block:
+    - name: Ensure /etc/apt/keyrings exists
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/
+        state: directory
+        mode: '0755'
+
+    - name: Download jenkins-apt-keyring
+      ansible.builtin.get_url:
+        url: https://pkg.jenkins.io/debian/jenkins.io-2023.key
+        dest: /etc/apt/keyrings/jenkins-keyring.asc
+
+    - name: Configure jenkins repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+        filename: jenkins
+        state: present
+      notify: update apt
+
+- name: Update apt if needed
+  ansible.builtin.meta: flush_handlers
+
 - name: Install Jenkins
   apt:
     # We may have just added the apt repository

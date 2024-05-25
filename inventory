@@ -114,6 +114,8 @@ all:
         comment: Kodi (formerly XBMC)
       - name: libreboot
         comment: Libreboot
+      - name: macports
+        comment: MacPorts
       - name: netbsd
         comment: NetBSD
         mountpoint: NetBSD

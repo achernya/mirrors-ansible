@@ -81,6 +81,7 @@
   with_items:
     - jenkins_site
     - mirrors_site
+    - macports_site
   notify: restart nginx
 - name: Activate sites
   file:
@@ -91,6 +92,7 @@
   with_items:
     - jenkins_site
     - mirrors_site
+    - macports_site
   notify: restart nginx
 - name: Delete default site
   file:

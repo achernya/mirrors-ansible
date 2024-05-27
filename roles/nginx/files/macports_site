@@ -1,0 +1,52 @@
+include /etc/nginx/snippets/security_headers.conf;
+
+types {
+    application/mac-binhex40 hqx;
+    application/octet-stream bin exe rmd160;
+    application/vnd.apple.installer+xml dist distz mpkg pkg;
+    application/x-7z-compressed 7z;
+    application/x-apple-diskimage dmg image img smi;
+    application/x-bzip2 bz2 tbz tbz2;
+    application/x-compress Z;
+    application/x-gzip gz tgz;
+    application/x-iso9660-image iso;
+    application/x-lzip lz;
+    application/x-lzma lzma tlz;
+    application/x-rar-compressed rar;
+    application/x-stuffit sit;
+    application/x-stuffitx sitx;
+    application/x-tar tar;
+    application/x-tcl tcl;
+    application/x-xz txz xz;
+    application/zip zip;
+    image/icns icns;
+}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name bos.us.distfiles.macports.org distfiles.macports.org;
+    root /ifs/mirror/macports/distfiles;
+    server_name_in_redirect on;
+    autoindex on;
+
+    add_header Cache-Control "max-age=2592000, public";
+    location ~ /$ {
+        add_header Cache-Control "max-age=300, public";
+    }
+    location = /ports.tar.gz {
+        add_header Cache-Control "max-age=1800, public";
+    }
+}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name bos.us.packages.macports.org packages.macports.org;
+    root /ifs/mirror/macports/packages;
+    server_name_in_redirect on;
+    autoindex on;
+
+    add_header Cache-Control "max-age=2592000, public";
+    location ~ /$ {
+        add_header Cache-Control "max-age=300, public";
+    }
+}

@@ -1,0 +1,154 @@
+{
+	# Global config
+	auto_https disable_redirects
+	email mirrors-root@mit.edu
+	default_sni mirrors.mit.edu
+	ocsp_stapling off
+}
+
+################################################################################
+# Shared Snippets
+################################################################################
+(access_logs) {
+	log {
+		output file /var/log/caddy/access.log
+	}
+}
+
+(security_headers) {
+	header X-Content-Type-Options nosniff
+	header X-Frame-Options "SAMEORIGIN"
+	header X-XSS-Protection "1; mode=block"
+	header X-Download-Options noopen
+}
+
+(mirrors_common) {
+	import access_logs
+	import security_headers
+	root * /ifs/mirror
+	try_files {path} {path}/
+	@htfiles `path_regexp('/\\.ht')`
+	error @htfiles 403
+	# Teapot Easter egg.
+	error /teapot 418
+	error /teapot.html 404
+	handle_errors 418 {
+		rewrite * /teapot.html
+		file_server
+	}
+	file_server {
+		index index.html index.htm
+	}
+}
+
+(jenkins_common) {
+	import access_logs
+	import security_headers
+	reverse_proxy localhost:8088
+	error /api/* 403
+}
+
+(macports_headers) {
+	@app-mac-binhex40 path *.hqx
+	@app-octet-stream path *.bin *.exe *.rmd160
+	@app-vnd.apple.installer+xml path *.dist *.distz *.mpkg *.pkg
+	@app-x-7z-compressed path *.7z
+	@app-x-apple-diskimage path *.dmg *.image *.img *.smi
+	@app-x-bzip2 path *.bz2 *.tbz *.tbz2
+	@app-x-compress path *.Z
+	@app-x-gzip path *.gz *.tgz
+	@app-x-iso9660-image path *.iso
+	@app-x-lzip path *.lz
+	@app-x-lzma path *.lzma *.tlz
+	@app-x-rar-compressed path *.rar
+	@app-x-stuffit path *.sit
+	@app-x-stuffitx path *.sitx
+	@app-x-tar path *.tar
+	@app-x-tcl path *.tcl
+	@app-x-xz path *.txz *.xz
+	@app-zip path *.zip
+	@img-icns path *.icns
+	header @app-mac-binhex40 Content-Type application/mac-binhex40
+	header @app-octet-stream Content-Type application/octet-stream
+	header @app-vnd.apple.installer+xml Content-Type application/vnd.apple.installer+xml
+	header @app-x-7z-compressed Content-Type application/x-7z-compressed
+	header @app-x-apple-diskimage Content-Type application/x-apple-diskimage
+	header @app-x-bzip2 Content-Type application/x-bzip2
+	header @app-x-compress Content-Type application/x-compress
+	header @app-x-gzip Content-Type application/x-gzip
+	header @app-x-iso9660-image Content-Type application/x-iso9660-image
+	header @app-x-lzip Content-Type application/x-lzip
+	header @app-x-lzma Content-Type application/x-lzma
+	header @app-x-rar-compressed Content-Type application/x-rar
+	header @app-x-stuffit Content-Type application/x-stuffit
+	header @app-x-stuffitx Content-Type application/x-stuffitx
+	header @app-x-tar Content-Type application/x-tar
+	header @app-x-tcl Content-Type application/x-tcl
+	header @app-x-xz Content-Type application/x-xz
+	header @app-zip Content-Type application/zip
+	header @img-icns Content-Type image/icns
+
+	header Cache-Control "max-age=2592000, public"
+	@dirs `path_regexp('/$')`
+	header @dirs Cache-Control "max-age=300, public"
+}
+
+(macports_dist) {
+	import access_logs
+	import security_headers
+	import macports_headers
+	root /ifs/mirror/macports/distfiles
+	file_server
+	header /ports.tar.gz Cache-Control "max-age=1800, public"
+}
+
+(macports_packages) {
+	import access_logs
+	import security_headers
+	import macports_headers
+	root /ifs/mirror/macports/packages
+	file_server
+}
+
+################################################################################
+# Site Configuration
+################################################################################
+
+## Mirrors site
+:80 {
+	import mirrors_common
+}
+
+https://mirrors.mit.edu https://ubuntu.mit.edu {
+	import mirrors_common
+}
+
+https://solar-one.mit.edu {
+	import mirrors_common
+}
+
+## Macports site
+http://bos.us.distfiles.macports.org http://distfiles.macports.org {
+	import macports_dist
+}
+
+https://bos.us.distfiles.macports.org {
+	import macports_dist
+}
+
+http://bos.us.packages.macports.org http://packags.macports.org {
+	import macports_packages
+}
+
+https://bos.us.packages.macports.org {
+	import macports_packages
+}
+
+## Jenkins
+https://mirrors.mit.edu:8443 https://ubuntu.mit.edu:8443 {
+	import jenkins_common
+}
+
+https://solar-one.mit.edu:8443 {
+	import jenkins_common
+}

@@ -1,0 +1,50 @@
+- name: Install gpg for apt key manipulation
+  apt:
+    name:
+      - gpg
+- name: Add Caddy key and repository
+  block:
+    - name: Ensure /etc/apt/keyrings exists
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/
+        state: directory
+        mode: '0755'
+
+    - name: Download caddy-apt-keyring
+      ansible.builtin.get_url:
+        url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+        dest: /etc/apt/keyrings/caddy-keyring.asc
+
+    - name: Configure caddy src repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/keyrings/caddy-keyring.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+        filename: caddy
+        state: present
+      notify: update apt
+
+    - name: Configure caddy src repository
+      ansible.builtin.apt_repository:
+        repo: "deb-src [signed-by=/etc/apt/keyrings/caddy-keyring.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+        filename: caddy
+        state: present
+      notify: update apt
+
+- name: Update apt if needed
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure /etc/caddy exists
+  ansible.builtin.file:
+    path: /etc/caddy/
+    state: directory
+    mode: '0755'
+
+- name: Install Caddyfile
+  ansible.builtin.copy:
+    src: Caddyfile
+    dest: /etc/caddy/
+  notify: restart caddy
+
+# - name: Install caddy
+#   apt:
+#     name:
+#       - caddy

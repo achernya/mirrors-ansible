@@ -1,4 +1,5 @@
 dependencies:
   - role: jenkins
   - role: nginx
+  - role: caddy
   - role: rsync

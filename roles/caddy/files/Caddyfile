@@ -38,6 +38,8 @@
 	}
 	file_server {
 		index index.html index.htm
+		browse
+		hide .*
 	}
 }
 
@@ -98,7 +100,11 @@
 	import security_headers
 	import macports_headers
 	root /ifs/mirror/macports/distfiles
-	file_server
+	file_server {
+		index index.html index.htm
+		browse
+		hide .*
+	}
 	header /ports.tar.gz Cache-Control "max-age=1800, public"
 }
 
@@ -107,7 +113,11 @@
 	import security_headers
 	import macports_headers
 	root /ifs/mirror/macports/packages
-	file_server
+	file_server {
+		index index.html index.htm
+		browse
+		hide .*
+	}
 }
 
 ################################################################################

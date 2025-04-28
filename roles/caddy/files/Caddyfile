@@ -38,7 +38,9 @@
 	}
 	file_server {
 		index index.html index.htm
-		browse
+		browse {
+			file_limit -1
+		}
 		hide .*
 	}
 }
@@ -102,7 +104,9 @@
 	root /ifs/mirror/macports/distfiles
 	file_server {
 		index index.html index.htm
-		browse
+		browse {
+			file_limit -1
+		}
 		hide .*
 	}
 	header /ports.tar.gz Cache-Control "max-age=1800, public"
@@ -115,7 +119,9 @@
 	root /ifs/mirror/macports/packages
 	file_server {
 		index index.html index.htm
-		browse
+		browse {
+			file_limit -1
+		}
 		hide .*
 	}
 }

@@ -110,6 +110,8 @@ all:
       - name: kernel
         comment: kernel.org
         schedule: "H H/6 * * *"
+      - name: kicad
+        comment: KiCad
       - name: kodi
         comment: Kodi (formerly XBMC)
       - name: libreboot

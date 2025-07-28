@@ -1,4 +1,5 @@
-- hosts: mirrors_dev
+- hosts: mirrors
+  #_dev
   roles:
     - sipb-mirrors
   vars:

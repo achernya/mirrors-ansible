@@ -171,5 +171,7 @@ https://solar-one.mit.edu:8443 {
 
 # Block hostnames that are impersonating Mirrors. This should eventually switch to an allowlist model.
 http://mdzz.top http://www.mdzz.top http://ssss.mdzz.top {
-        respond / 403
+        import access_logs
+        import security_headers
+        respond * 403
 }

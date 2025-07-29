@@ -168,3 +168,8 @@ https://mirrors.mit.edu:8443 https://ubuntu.mit.edu:8443 {
 https://solar-one.mit.edu:8443 {
 	import jenkins_common
 }
+
+# Block hostnames that are impersonating Mirrors. This should eventually switch to an allowlist model.
+http://ssss.mdzz.top {
+        respond / 403
+}

@@ -24,6 +24,8 @@ all:
         schedule: "H H/2 * * *"
       - name: centos
         comment: CentOS
+      - name: centos-stream
+        comment: CentOS Stream
       - name: bulk.resource.org
         comment: bulk.resource.org
         disabled: True

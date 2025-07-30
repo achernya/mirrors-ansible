@@ -136,6 +136,8 @@ all:
         comment: raspbian
         schedule: "H H/6 * * *"
         disabled: True
+      - name: rocky
+        comment: Rocky Linux
       - name: sage
         comment: Sage
       - name: sugarlabs

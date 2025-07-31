@@ -1,0 +1,18 @@
+[Unit]
+Description=Generate server statistics using goaccess
+Wants=goaccess.timer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/goaccess \
+	--db-path=/var/lib/goaccess/ \
+	--no-parsing-spinner \
+	--log-format=CADDY \
+	--anonymize-ip \
+	--restore \
+	--persist \
+	--output=/srv/ifs-mirror/goaccess/report.html \
+	/var/log/caddy/access.log
+
+[Install]
+WantedBy=multi-user.target

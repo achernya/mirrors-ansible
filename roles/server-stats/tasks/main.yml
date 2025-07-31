@@ -1,0 +1,19 @@
+- name: Install goaccess
+  apt:
+    name:
+      - goaccess
+
+- name: Install goaccess systemd files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  loop:
+    - goaccess.service
+    - goaccess.timer
+
+- name: Ensure goaccess units are enabled
+  ansible.builtin.systemd_service:
+    name: goaccess.timer
+    state: started
+    enabled: true
+    daemon_reload: true

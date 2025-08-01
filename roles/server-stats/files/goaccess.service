@@ -8,6 +8,7 @@ ExecStart=/usr/bin/goaccess \
 	--db-path=/var/lib/goaccess/ \
 	--no-parsing-spinner \
 	--log-format=CADDY \
+	--geoip-database=/var/lib/geoip/dbip-city-lite.mmdb \
 	--anonymize-ip \
 	--restore \
 	--persist \

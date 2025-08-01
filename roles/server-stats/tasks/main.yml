@@ -3,6 +3,30 @@
     name:
       - goaccess
 
+- name: Ensure /var/lib/goaccess/ exists
+  ansible.builtin.file:
+    path: /var/lib/goaccess/
+    state: directory
+    mode: '0755'
+
+- name: Ensure /var/lib/geoip exists
+  ansible.builtin.file:
+    path: /var/lib/geoip/
+    state: directory
+    mode: '0755'
+
+- name: Download dbip-city database
+  ansible.builtin.get_url:
+    # TODO: make this a function of today's date
+    url: https://download.db-ip.com/free/dbip-city-lite-2025-08.mmdb.gz
+    dest: /var/lib/geoip/dbip-city-lite.mmdb.gz
+    mode: '0644'
+
+- name: Uncompress dbip-city and install it
+  ansible.builtin.command:
+    cmd: "gunzip -f /var/lib/geoip/dbip-city-lite.mmdb.gz"
+    removes: /var/lib/geoip/dbip-city-lite.mmdb.gz
+
 - name: Install goaccess systemd files
   ansible.builtin.copy:
     src: "{{ item }}"

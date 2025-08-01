@@ -27,6 +27,18 @@
     cmd: "gunzip -f /var/lib/geoip/dbip-city-lite.mmdb.gz"
     removes: /var/lib/geoip/dbip-city-lite.mmdb.gz
 
+- name: Download dbip-asn database
+  ansible.builtin.get_url:
+    # TODO: make this a function of today's date
+    url: https://download.db-ip.com/free/dbip-asn-lite-2025-08.mmdb.gz
+    dest: /var/lib/geoip/dbip-asn-lite.mmdb.gz
+    mode: '0644'
+
+- name: Uncompress dbip-asn and install it
+  ansible.builtin.command:
+    cmd: "gunzip -f /var/lib/geoip/dbip-asn-lite.mmdb.gz"
+    removes: /var/lib/geoip/dbip-asn-lite.mmdb.gz
+
 - name: Install goaccess systemd files
   ansible.builtin.copy:
     src: "{{ item }}"

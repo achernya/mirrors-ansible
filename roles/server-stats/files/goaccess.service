@@ -11,6 +11,7 @@ ExecStart=/usr/bin/goaccess \
 	--geoip-database=/var/lib/geoip/dbip-city-lite.mmdb \
 	--geoip-database=/var/lib/geoip/dbip-asn-lite.mmdb \
 	--anonymize-ip \
+	--keep-last=8 \
 	--restore \
 	--persist \
 	--output=/srv/ifs-mirror/goaccess/report.html \
